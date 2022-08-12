@@ -26,7 +26,7 @@ note_names = ['A-0____';'A#/Bb-0';'B-0____';'C-1____';'C#/Db-1';'D-1____';...
 %[y,Fs] = audioread('..\sample\violin_open_bow_pizz.mp3'); % sample file
 %[y,Fs] = audioread('..\sample\violin_a.mp3'); % sample file
 %[y,Fs] = audioread('..\sample\guitar_sample.mp3'); % sample file
-[y,Fs] = audioread('d:\castle.mp3');
+%[y,Fs] = audioread('d:\castle.mp3');
 
 % convert stereo to mono if that is the case
 s = size(y);
@@ -83,7 +83,7 @@ plot_flag = false;
 %     ym = filter(b,a,ym);
 % end
 
-windowSize = max(1,fix(Fs/10)); % about 100ms
+windowSize = max(1,fix(1*Fs/100)); % about 100ms
 step = max(1,fix(Fs/100));      % about 10ms
 n_max = floor((length(ym) - 2*windowSize)/step);
 
