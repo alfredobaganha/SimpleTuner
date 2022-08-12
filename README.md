@@ -11,12 +11,12 @@ multiplied to obtain a peak at the fundamental pitch frequency when observing th
 power density function in the frequency domain.
 
 Notes:
-- Resampling requires windowing to avoid high frequency noise due to discontinuities
+x Resampling requires windowing to avoid high frequency noise due to discontinuities
 - Need to research a better window function with better properties for now Hanning will work
 - The FFTs are computed over a real vector, thus hermitian symmetry is kept and for our
   purposes we only need the upper half of the spectrum, which corresponds to the first 
   half of the output vector
-- The objectiv at this point is to explore the algorithm and adjust its complexity and details
+- The objective at this point is to explore the algorithm and adjust its complexity and details
   before c++ implementation
 
 Improvements:
@@ -25,3 +25,5 @@ Improvements:
 - Print out a log file with the detected pitch, expected pitch, error and note name
 - Error is not compensated for quantisation error yet
 - Reference pitch is now an input parameter
+- Resampling was replaced by simple fir filtering. Still requires windowing
+- Better handling of mid points (for odd length vectors)

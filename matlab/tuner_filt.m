@@ -1,8 +1,8 @@
 clear all;
 close all;
 clc;
-% Totally unecessary
 
+% Totally unecessary ... But ...
 note_names = ['A-0____';'A#/Bb-0';'B-0____';'C-1____';'C#/Db-1';'D-1____';...
               'D#/Eb-1';'E-1____';'F-1____';'F#/Gb_1';'G-1____';'G#/Ab-1';...
               'A-1____';'A#/Bb-1';'B-1____';'C-2____';'C#/Db-2';'D-2____';...
@@ -19,11 +19,14 @@ note_names = ['A-0____';'A#/Bb-0';'B-0____';'C-1____';'C#/Db-1';'D-1____';...
               'D#/Eb-7';'E-7____';'F-7____';'F#/Gb-7';'G-7____';'G#/Ab-7';...
               'A-7____';'A#/Bb-7';'B-7____';'C-8____'];
 
-% load audio file
+% load sample audio file
+[y,Fs] = audioread('..\sample\flute_a4_440.mp3'); % sample file
+%[y,Fs] = audioread('..\sample\oboe_a4_440.mp3'); % sample file
+%[y,Fs] = audioread('..\sample\piano_a4_440.mp3'); % sample file
 %[y,Fs] = audioread('..\sample\violin_open_bow_pizz.mp3'); % sample file
-[y,Fs] = audioread('..\sample\violin_a.mp3'); % sample file
+%[y,Fs] = audioread('..\sample\violin_a.mp3'); % sample file
 %[y,Fs] = audioread('..\sample\guitar_sample.mp3'); % sample file
-%[y,Fs] = audioread('d:\castle.mp3');
+[y,Fs] = audioread('d:\castle.mp3');
 
 % convert stereo to mono if that is the case
 s = size(y);
@@ -69,17 +72,16 @@ disp('Temperament: Equal Temperament');
 nHarm = 5;                  % number of harmonic components. 5 seemed to 
                             % work consistently, 3 although simpler tended
                             % to have octave resolution problems
-
-
                        
-filter_flag = false;        % enable/disable optional FIR LFP
+%filter_flag = false;        % enable/disable optional FIR LFP
 plot_flag = false;
 
-if(filter_flag)             % Assume Fs = 44100
-    a = [1];
-    load('filter.mat');     % LPF with 2.5kHz cutoff and 4kHz stop 40dB rejection
-    ym = filter(b,a,ym);
-end
+%[Deprecated]
+% if(filter_flag)             % Assume Fs = 44100
+%     a = [1];
+%     load('filter.mat');     % LPF with 2.5kHz cutoff and 4kHz stop 40dB rejection
+%     ym = filter(b,a,ym);
+% end
 
 windowSize = max(1,fix(Fs/10)); % about 100ms
 step = max(1,fix(Fs/100));      % about 10ms
@@ -92,10 +94,12 @@ if(plot_flag)
     title('Harmonic Product Spectrum');
 end
 
+
+
 note_idx = zeros(n_max,1);
 t_adv =zeros(n_max,1);
 
-n_max = 10;
+load('fir_set');    % Loads the fir coefficients
 
 for n=0:n_max % lets check about 100ms of the input sample
 
@@ -123,22 +127,34 @@ for n=0:n_max % lets check about 100ms of the input sample
 
     yt = ym(startPoint:startPoint+windowSize-1);            % take 100ms of data
     yt = yt.*hann(length(yt));
+    
     for i = 1:nHarm
-        if(i==1)
-		inp = yt;     % This is the fundamental pitch.
-                                        % hanning windowing to mitigate 
-                                        % high frequency noise
-                                        % TODO: Consider more suitable
-                                        % window function
-        else
-            inp = resample(yt,1,i);    % downsample with an polyphase anti-alias filter
-                                        % to remove higher order harmonics
+
+        switch(i)
+            case 1
+                inp = yt;
+                
+            case 2
+                inp = conv(yt, b2, 'same');
+
+            case 3
+                inp = conv(yt, b3, 'same');
+
+            case 4
+                inp = conv(yt, b4, 'same');
+
+            case 5
+                inp = conv(yt, b5, 'same');
+
+            otherwise
+                inp = yt;
         end
-        fnv(:,i) = fft(inp,nFft);       % the trick here is to zero pad the fft.
+
+        fnv(:,i) = fft(inp, nFft);      % the trick here is to zero pad the fft.
                                         % storing is not necessarily
                                         % required
         
-		mul_Z = mul_Z.*fnv(:,i);        % Harmonic Product Spectrum: The idea
+		mul_Z = mul_Z.*fnv(:, i);       % Harmonic Product Spectrum: The idea
                                         % is to coherently multiply the
                                         % multiple filtered inputs. the
                                         % fundamental harmonic will combine
@@ -146,16 +162,20 @@ for n=0:n_max % lets check about 100ms of the input sample
                                         % harmonics not so much, thus given
                                         % a distintive peak at the
                                         % funtamental fequency pitch
+%         plot(10*log10(abs(mul_Z(1:round(nFft/2)))));
+%         if(i==5)
+%             pause(2);
+%         end
     end
 
    
     la_mul_Z = 10*log10(abs(mul_Z));
-    [mxz, mxz_i] = max(la_mul_Z(1:fix(nFft/2)));
+    [mxz, mxz_i] = max(la_mul_Z(1:round(nFft/2)));
     
     if(plot_flag)
         figure(1);
         hold on; grid on; %xlim([50,1960]);
-        plot(la_mul_Z(1:fix(nFft/2)));
+        plot(la_mul_Z(1:round(nFft/2)));
         plot(mxz_i,mxz,'rx');
     end
 
