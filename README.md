@@ -20,7 +20,6 @@ Notes:
   before c++ implementation
 
 Improvements:
-2022/08/11
 - Automatically determine the best (tradeoff) prime for the size of FFT based on the sampling rate.
   The tradeoff here is the frequency resolution and FFT complexity.
 - Print out a log file with the detected pitch, expected pitch, error and note name

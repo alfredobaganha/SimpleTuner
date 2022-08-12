@@ -21,9 +21,9 @@ note_names = ['A_0____';'A#/Bb_0';'B_0____';'C_1____';'C#/Db_1';'D_1____';...
 
 % load audio file
 %[y,Fs] = audioread('..\sample\violin_open_bow_pizz.mp3'); % sample file
-[y,Fs] = audioread('..\sample\violin_a.mp3'); % sample file
+%[y,Fs] = audioread('..\sample\violin_a.mp3'); % sample file
 %[y,Fs] = audioread('..\sample\guitar_sample.mp3'); % sample file
-%[y,Fs] = audioread('d:\castle.mp3');
+[y,Fs] = audioread('d:\castle.mp3');
 
 % convert stereo to mono if that is the case
 s = size(y);
@@ -69,7 +69,7 @@ nHarm = 5;                  % number of harmonic components. 5 seemed to
 filter_flag = false;        % enable/disable optional FIR LFP
 plot_flag = false;
 
-if(filter_flag)
+if(filter_flag)             % Assume Fs = 44100
     a = [1];
     load('filter.mat');     % LPF with 2.5kHz cutoff and 4kHz stop 40dB rejection
     ym = filter(b,a,ym);
