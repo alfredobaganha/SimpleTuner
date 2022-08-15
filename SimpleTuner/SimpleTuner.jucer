@@ -4,7 +4,7 @@
               addUsingNamespaceToJuceHeader="0" displaySplashScreen="1" jucerFormatVersion="1"
               companyName="JTBA Tech" splashScreenColour="Light" pluginDesc="Simple Chromatic Tuner"
               pluginName="SimpleTuner" pluginManufacturerCode="Jtba" pluginManufacturer="JTBA Tech"
-              pluginChannelConfigs="{1,0}" pluginVST3Category="Analyzer" cppLanguageStandard="17">
+              pluginChannelConfigs="{1,1}" pluginVST3Category="Analyzer" cppLanguageStandard="17">
   <MAINGROUP id="tzxJgW" name="SimpleTuner">
     <GROUP id="{16000532-4D34-CB2D-E411-910B9E6D3F28}" name="Source">
       <FILE id="d3gvls" name="PluginProcessor.cpp" compile="1" resource="0"
