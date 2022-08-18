@@ -28,6 +28,13 @@ private:
     // This reference is provided as a quick way for your editor to
     // access the processor object that created it.
     SimpleTunerAudioProcessor& audioProcessor;
+    
+    // adapted from tutorial https://docs.juce.com/master/tutorial_label.html
+    juce::Label titleLabel;
+    juce::Label inputLabel;
+    juce::Label inputText;
+    juce::Label uppercaseLabel;
+    juce::Label uppercaseText;
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (SimpleTunerAudioProcessorEditor)
 };
