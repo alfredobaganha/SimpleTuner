@@ -35,6 +35,7 @@ private:
     juce::Label inputText;
     juce::Label uppercaseLabel;
     juce::Label uppercaseText;
+    juce::Label trailLabel;
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (SimpleTunerAudioProcessorEditor)
 };

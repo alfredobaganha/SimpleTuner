@@ -26,24 +26,33 @@ SimpleTunerAudioProcessorEditor::SimpleTunerAudioProcessorEditor (SimpleTunerAud
     titleLabel.setJustificationType(juce::Justification::centred);
 
     addAndMakeVisible(inputLabel);
-    inputLabel.setText("A4 Reference Pitch [Hz]:", juce::dontSendNotification);
+    inputLabel.setText("A4 Reference Pitch:", juce::dontSendNotification);
     inputLabel.attachToComponent(&inputText, true);
     inputLabel.setColour(juce::Label::textColourId, juce::Colours::orange);
-    inputLabel.setJustificationType(juce::Justification::left);
+    inputLabel.setJustificationType(juce::Justification::right);
 
     addAndMakeVisible(uppercaseLabel);
     uppercaseLabel.setText("Uppercase:", juce::dontSendNotification);
     uppercaseLabel.attachToComponent(&uppercaseText, true);
     uppercaseLabel.setColour(juce::Label::textColourId, juce::Colours::orange);
-    uppercaseLabel.setJustificationType(juce::Justification::left);
-
-    addAndMakeVisible(uppercaseText);
-    uppercaseText.setColour(juce::Label::backgroundColourId, juce::Colours::darkblue);
+    uppercaseLabel.setJustificationType(juce::Justification::right);
 
     addAndMakeVisible(inputText);
     inputText.setEditable(true);
     inputText.setColour(juce::Label::backgroundColourId, juce::Colours::darkblue);
+    inputText.setText("440",juce::dontSendNotification);
     inputText.onTextChange = [this] { uppercaseText.setText(inputText.getText().toUpperCase(), juce::dontSendNotification); };
+    inputText.attachToComponent(&trailLabel, true);
+
+    addAndMakeVisible(uppercaseText);
+    uppercaseText.setColour(juce::Label::backgroundColourId, juce::Colours::darkblue);
+    uppercaseText.setText(inputText.getText().toUpperCase(), juce::dontSendNotification);
+
+    addAndMakeVisible(trailLabel);
+    trailLabel.setText("Hz", juce::dontSendNotification);
+    //inputLabel.attachToComponent(&inputText, true);
+    trailLabel.setColour(juce::Label::textColourId, juce::Colours::orange);
+    trailLabel.setJustificationType(juce::Justification::left);
 
     setResizable(true, true);
     setSize(320, 200);
@@ -60,9 +69,9 @@ void SimpleTunerAudioProcessorEditor::paint (juce::Graphics& g)
     // (Our component is opaque, so we must completely fill the background with a solid colour)
     g.fillAll (getLookAndFeel().findColour (juce::ResizableWindow::backgroundColourId));
 
-  /*g.setColour(juce::Colours::white);
+    g.setColour(juce::Colours::goldenrod);
     g.setFont (15.0f);
-    g.drawFittedText ("Hello World!", getLocalBounds(), juce::Justification::centred, 1);*/
+    g.drawFittedText ("W = " + std::to_string(getWidth()) + " H = " + std::to_string(getHeight()), getLocalBounds(), juce::Justification::centredBottom, 1);
 
      
 
@@ -74,6 +83,6 @@ void SimpleTunerAudioProcessorEditor::resized()
     // subcomponents in your editor..
 
     titleLabel.setBounds(10, 10, getWidth() - 20, 30);
-    inputText.setBounds(130, 50, getWidth() - 140, 20);
+    trailLabel.setBounds(getWidth() - 30, 50, getWidth(), 20); // lame (need a better way of layouting)
     uppercaseText.setBounds(100, 80, getWidth() - 110, 20);
 }
