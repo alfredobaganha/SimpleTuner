@@ -20,13 +20,17 @@ note_names = ['A-0____';'A#/Bb-0';'B-0____';'C-1____';'C#/Db-1';'D-1____';...
               'A-7____';'A#/Bb-7';'B-7____';'C-8____'];
 
 % load sample audio file
-[y,Fs] = audioread('..\sample\flute_a4_440.mp3'); % sample file
+%[y,Fs] = audioread('..\sample\flute_a4_440.mp3'); % sample file
 %[y,Fs] = audioread('..\sample\oboe_a4_440.mp3'); % sample file
 %[y,Fs] = audioread('..\sample\piano_a4_440.mp3'); % sample file
 %[y,Fs] = audioread('..\sample\violin_open_bow_pizz.mp3'); % sample file
 %[y,Fs] = audioread('..\sample\violin_a.mp3'); % sample file
 %[y,Fs] = audioread('..\sample\guitar_sample.mp3'); % sample file
 %[y,Fs] = audioread('d:\castle.mp3');
+
+load('chirp_sig.mat');
+y=sig';
+Fs =192000;
 
 % convert stereo to mono if that is the case
 s = size(y);
@@ -83,8 +87,8 @@ plot_flag = false;
 %     ym = filter(b,a,ym);
 % end
 
-windowSize = max(1,fix(1*Fs/100)); % about 100ms
-step = max(1,fix(Fs/100));      % about 10ms
+windowSize = max(1,fix(1*Fs/100)); % about 10ms
+step = max(1,fix(Fs/100)/4);      % about 10ms
 n_max = floor((length(ym) - 2*windowSize)/step);
 
 %n_max = 10;
