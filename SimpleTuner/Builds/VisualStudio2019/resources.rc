@@ -16,9 +16,9 @@ BEGIN
     BLOCK "040904E4"
     BEGIN
       VALUE "CompanyName",  "JTBA Tech\0"
-      VALUE "FileDescription",  "SimpleTuner\0"
+      VALUE "FileDescription",  "Tuning Fork\0"
       VALUE "FileVersion",  "1.0.0\0"
-      VALUE "ProductName",  "SimpleTuner\0"
+      VALUE "ProductName",  "Tuning Fork\0"
       VALUE "ProductVersion",  "1.0.0\0"
     END
   END

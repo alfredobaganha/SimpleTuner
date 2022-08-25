@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<JUCERPROJECT id="Nol7p4" name="SimpleTuner" projectType="audioplug" useAppConfig="0"
+<JUCERPROJECT id="Nol7p4" name="Tuning Fork" projectType="audioplug" useAppConfig="0"
               addUsingNamespaceToJuceHeader="0" displaySplashScreen="1" jucerFormatVersion="1"
-              companyName="JTBA Tech" splashScreenColour="Light" pluginDesc="Simple Chromatic Tuner"
-              pluginName="SimpleTuner" pluginManufacturerCode="Jtba" pluginManufacturer="JTBA Tech"
+              companyName="JTBA Tech" pluginDesc="Tunin Fork - A Simple Chromatic Tuner"
+              pluginName="Tuning Fork" pluginManufacturerCode="Jtba" pluginManufacturer="JTBA Tech"
               pluginChannelConfigs="{1,1}" pluginVST3Category="Analyzer" cppLanguageStandard="17">
-  <MAINGROUP id="tzxJgW" name="SimpleTuner">
+  <MAINGROUP id="tzxJgW" name="Tuning Fork">
     <GROUP id="{16000532-4D34-CB2D-E411-910B9E6D3F28}" name="Source">
       <FILE id="d3gvls" name="PluginProcessor.cpp" compile="1" resource="0"
             file="Source/PluginProcessor.cpp"/>
